@@ -57,3 +57,6 @@ The `whisper-mps` repo provides an all round support for running Whisper in vari
   --youtube-url URL_ADDRESS
                   The Youtube play url 
 ```
+
+## WE ARE HIRING
+refer here: https://daxiang.feishu.cn/docx/LluCd7J38o9U5pxN3kdcpSh6nEh
