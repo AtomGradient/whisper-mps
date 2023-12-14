@@ -18,7 +18,14 @@ pip install whisper-mps
 Run inference from any path on your computer:
 
 ```bash
-whisper-mps --file-name < wav filename >
+whisper-mps --file-name <wav filename>
+```
+
+Run inference from specfic model size:
+
+```bash
+# for example,with base model size, others:["tiny", "base", "small", "medium", "large"]
+whisper-mps --file-name <wav filename> --model-name base
 ```
 
 
@@ -32,4 +39,6 @@ The `whisper-mps` repo provides an all round support for running Whisper in vari
 ```
   --file-name FILE_NAME
                         Path or URL to the audio file to be transcribed.
+  --model-name MODEL_NAME
+                        size of the OPENAI Whisper model name, like tiny(default),base,small,etc                        
 ```
