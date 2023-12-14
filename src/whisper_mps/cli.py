@@ -14,11 +14,17 @@ parser.add_argument(
 def main():
     args = parser.parse_args()
     print('Default with small size model')
-    # text = whisper.transcribe(speech_file)["text"] ## only for debug
-    text = whisper.transcribe(args.file_name)
-    print(text)
-    with open("output.json", "w", encoding="utf8") as fp:
-        json.dump(text, fp, ensure_ascii=False)
-    print(
-        f"Voila!✨ Your file has been transcribed go check it out over here 👉 output.json"
-    )
+    with Progress(
+        TextColumn("🤗 [progress.description]"),
+        BarColumn(style="yellow1", pulse_style="white"),
+        TimeElapsedColumn(),
+    ) as progress:
+        progress.add_task("[yellow]Transcribing...", total=None)
+        # text = whisper.transcribe(speech_file)["text"] ## only for debug
+        text = whisper.transcribe(args.file_name)
+        print(text)
+        with open("output.json", "w", encoding="utf8") as fp:
+            json.dump(text, fp, ensure_ascii=False)
+        print(
+            f"Voila!✨ Your file has been transcribed go check it out over here 👉 output.json"
+        )
