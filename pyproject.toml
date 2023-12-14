@@ -1,6 +1,6 @@
 [project]
 name = "whisper-mps"
-version = "0.0.6"
+version = "0.0.7"
 description = "with Apple MPS support for OpenAI Whisper"
 authors = [
     {name = "wushuhong", email = "wushuhong@atomgradient.com"},
