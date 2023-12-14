@@ -2,7 +2,8 @@
 
 An opinionated CLI to transcribe Audio files w/ Whisper on-device! Powered by  *MLX*, *Whisper* & *Apple M series*
 
-**TL;DR** - After our actual testing. The Whisper supported by MPS achieves speeds comparable to 4090! 80 mins audio file only need 80s on APPLE M1 MAX 32G! ONLY 80 SECONDS
+**TL;DR** - After our actual testing. The Whisper supported by MPS achieves speeds comparable to 4090! 
+80 mins audio file only need 80s on APPLE M1 MAX 32G! ONLY 80 SECONDS
 
 
 ## 🆕 Blazingly fast transcriptions via your terminal! ⚡️
@@ -38,7 +39,7 @@ The `whisper-mps` repo provides an all round support for running Whisper in vari
 
 ```
   --file-name FILE_NAME
-                        Path or URL to the audio file to be transcribed.
+                    Path or URL to the audio file to be transcribed.
   --model-name MODEL_NAME
-                        size of the OPENAI Whisper model name, like tiny(default),base,small,etc                        
+                    size of the OPENAI Whisper model name, like tiny(default),base,small,etc                        
 ```
