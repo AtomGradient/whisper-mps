@@ -1,8 +1,8 @@
 # whisper-mps
 
-![whisper-mps](./whisper-mps.jpeg)
+<img src="./whisper-mps.jpeg" alt="image" width="50%" height="auto">
 
-An opinionated CLI to transcribe Audio files w/ Whisper on-device! Powered by  *MLX*, *Whisper* & *Apple M series*
+An opinionated CLI to transcribe Audio files(or youtube videos) w/ Whisper on-device! Powered by  *MLX*, *Whisper* & *Apple M series*
 
 **TL;DR** - After our actual testing. The Whisper supported by MPS achieves speeds comparable to 4090! 
 
@@ -53,7 +53,7 @@ The `whisper-mps` repo provides an all round support for running Whisper in vari
   --file-name FILE_NAME
                   Path or URL to the audio file to be transcribed.
   --model-name MODEL_NAME
-                  size of the OPENAI Whisper model name, like tiny(default),base,small,etc      
+                  Size of the OPENAI Whisper model name, like tiny(default),base,small,etc      
   --youtube-url URL_ADDRESS
-                  the youtube play url 
+                  The Youtube play url 
 ```
