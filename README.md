@@ -31,6 +31,11 @@ Run inference from specfic model size:
 whisper-mps --file-name <wav filename> --model-name base
 ```
 
+Run inference from YOUTUBE URL on your computer:
+
+```bash
+whisper-mps --youtube-url https://www.youtube.com/watch\?v\=jaM02mb6JFM
+```
 
 > [!NOTE]
 > The CLI is highly opinionated and only works on Apple MPS.
