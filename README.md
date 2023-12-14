@@ -46,7 +46,9 @@ The `whisper-mps` repo provides an all round support for running Whisper in vari
 
 ```
   --file-name FILE_NAME
-                    Path or URL to the audio file to be transcribed.
+                  Path or URL to the audio file to be transcribed.
   --model-name MODEL_NAME
-                    size of the OPENAI Whisper model name, like tiny(default),base,small,etc                        
+                  size of the OPENAI Whisper model name, like tiny(default),base,small,etc      
+  --youtube-url URL_ADDRESS
+                  the youtube play url 
 ```
