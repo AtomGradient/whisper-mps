@@ -20,7 +20,8 @@ pip install whisper-mps
 Run inference from any path on your computer:
 
 ```bash
-whisper-mps --file-name <wav filename>
+# filename should be wav/mp3/mp4 etc
+whisper-mps --file-name <filename>
 ```
 
 Run inference from specfic model size:
@@ -28,12 +29,14 @@ Run inference from specfic model size:
 ```bash
 # for example,with base model size, others:["tiny", "base", "small", "medium", "large"]
 # Larger models require more loading time
-whisper-mps --file-name <wav filename> --model-name base
+# filename should be wav/mp3/mp4 etc
+whisper-mps --file-name <filename> --model-name base
 ```
 
 Run inference from YOUTUBE URL on your computer:
 
 ```bash
+# default download behavior is to fetch the video as a mp3 file to save time
 whisper-mps --youtube-url https://www.youtube.com/watch\?v\=jaM02mb6JFM
 ```
 
