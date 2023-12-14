@@ -26,4 +26,4 @@ requires = ["pdm-backend"]
 build-backend = "pdm.backend"
 
 [project.scripts]
-whisper-mps = "whisper-mps.cli:main"
+whisper-mps = "whisper_mps.cli:main"
