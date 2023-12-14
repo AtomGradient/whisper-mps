@@ -27,6 +27,7 @@ Run inference from specfic model size:
 
 ```bash
 # for example,with base model size, others:["tiny", "base", "small", "medium", "large"]
+# Larger models require more loading time
 whisper-mps --file-name <wav filename> --model-name base
 ```
 
