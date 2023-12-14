@@ -1,0 +1,53 @@
+[project]
+name = "whisper-mps"
+version = "0.0.1"
+description = "with Apple MPS support for OpenAI Whisper"
+authors = [
+    {name = "wushuhong", email = "wushuhong@atomgradient.com"},
+]
+dependencies = []
+requires-python = ">=3.11"
+readme = "README.md"
+license = {text = "MIT"}
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+
+[tool.pdm]
+package-type = "library"
+
+
+
+
+
+[project]
+name = "whisper-mps"
+version = "0.0.1"
+description = "with Apple MPS support for OpenAI Whisper"
+authors = [
+    {name = "wushuhong", email = "wushuhong@atomgradient.com"},
+]
+dependencies = [
+    "moviepy==1.0.3",
+    "pytube==15.0.0",
+    "mlx>=0.0.5",
+    "numba>=0.58.1",
+    "numpy>=1.26.2",
+    "torch>=2.1.1",
+    "tqdm>=4.66.1",
+    "more-itertools>=10.1.0",
+    "tiktoken==0.3.3",
+    "rich>=13.7.0",
+]
+requires-python = ">=3.11"
+readme = "README.md"
+license = {text = "MIT"}
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[project.scripts]
+whisper-mps = "whisper-mps.cli:main"
