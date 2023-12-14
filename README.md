@@ -2,7 +2,7 @@
 
 An opinionated CLI to transcribe Audio files w/ Whisper on-device! Powered by  *MLX*, *Whisper* & *Apple M series*
 
-**TL;DR** - After our actual testing. The Whisper supported by MPS achieves speeds comparable to 4090!
+**TL;DR** - After our actual testing. The Whisper supported by MPS achieves speeds comparable to 4090! 80 mins audio file only need 80s on APPLE M1 MAX 32G! ONLY 80 SECONDS
 
 
 ## 🆕 Blazingly fast transcriptions via your terminal! ⚡️
