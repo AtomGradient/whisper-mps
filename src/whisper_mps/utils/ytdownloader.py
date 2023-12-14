@@ -21,7 +21,7 @@ def download_and_convert_to_mp3(url: str,
 
         Path(output_path).mkdir(parents=True, exist_ok=True)
 
-        mp3_file_path = os.path.join(output_path, filename + ".mp4")
+        mp3_file_path = os.path.join(output_path, filename + ".mp3")
         logging.info(f"Downloading started... {mp3_file_path}")
 
         downloaded_file_path = audio_stream.download(output_path)
