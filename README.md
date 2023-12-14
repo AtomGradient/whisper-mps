@@ -1,5 +1,7 @@
 # whisper-mps
 
+![whisper-mps](./whisper-mps.jpeg)
+
 An opinionated CLI to transcribe Audio files w/ Whisper on-device! Powered by  *MLX*, *Whisper* & *Apple M series*
 
 **TL;DR** - After our actual testing. The Whisper supported by MPS achieves speeds comparable to 4090! 
