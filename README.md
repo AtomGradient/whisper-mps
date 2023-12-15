@@ -22,7 +22,7 @@ pip install whisper-mps
 Run inference from any path on your computer:
 
 ```bash
-# filename should be wav/mp3/mp4 etc
+# filetype should be wav/mp3/mp4 etc
 whisper-mps --file-name <filename>
 ```
 
@@ -31,7 +31,7 @@ Run inference from specfic model size:
 ```bash
 # for example,with base model size, others:["tiny", "base", "small", "medium", "large"]
 # Larger models require more loading time
-# filename should be wav/mp3/mp4 etc
+# filetype should be wav/mp3/mp4 etc
 whisper-mps --file-name <filename> --model-name base
 ```
 
