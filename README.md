@@ -16,6 +16,7 @@ We've added a CLI to enable fast transcriptions. Here's how you can use it:
 Install `whisper-mps` with `pip`:
 
 ```bash
+# please install ffmpeg first: brew install ffmpeg
 pip install whisper-mps
 ```
 
