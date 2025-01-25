@@ -57,6 +57,8 @@ The `whisper-mps` repo provides an all round support for running Whisper in vari
                   Size of the OPENAI Whisper model name, like tiny(default),base,small,etc      
   --youtube-url URL_ADDRESS
                   The Youtube play url 
+  --output-file-name OUTPUT_FILE_NAME
+                  The output file name for the transcribed text JSON
 ```
 
 ## WE ARE HIRING

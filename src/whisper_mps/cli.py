@@ -30,7 +30,15 @@ parser.add_argument(
     help="the address from Youtube,like: https://www.youtube.com/watch?v=jaM02mb6JFM",
 )
 
-def worker(file_name,model_name):
+parser.add_argument(
+    "--output-file-name",
+    required=False,
+    default="output.json",
+    type=str,
+    help="the output file name for the transcribed text JSON",
+)
+
+def worker(file_name,model_name,output_file_name):
     with Progress(
         TextColumn("🤗 [progress.description]"),
         BarColumn(style="yellow1", pulse_style="white"),
@@ -39,10 +47,10 @@ def worker(file_name,model_name):
         progress.add_task("[yellow]Transcribing...", total=None)
         text = whisper.transcribe(file_name,model=model_name)
         print(text)
-        with open("output.json", "w", encoding="utf8") as fp:
+        with open(output_file_name, "w", encoding="utf8") as fp:
             json.dump(text, fp, ensure_ascii=False)
         print(
-            f"Voila!✨ Your file has been transcribed go check it out over here 👉 output.json"
+            f"Voila!✨ Your file has been transcribed go check it out over here 👉 {output_file_name}"
         )
 
 def main():
@@ -50,13 +58,16 @@ def main():
     file_name = args.file_name
     model_name = args.model_name
     youtube_url = args.youtube_url
+    output_file_name = args.output_file_name
+    if not output_file_name.lower().endswith('.json'):
+        output_file_name = output_file_name + '.json'
     if youtube_url is not None:
         print(f'start downloading audios: {args.youtube_url}')
         audio_path = download_and_convert_to_mp3(youtube_url)
-        worker(audio_path,model_name)
+        worker(audio_path,model_name,output_file_name)
     else:
         if file_name is None:
             logging.error(f"local file_name should not be none!")
             return None
-        worker(file_name,model_name)    
+        worker(file_name,model_name,output_file_name)    
 
