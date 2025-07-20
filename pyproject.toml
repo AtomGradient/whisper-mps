@@ -1,23 +1,23 @@
 [project]
 name = "whisper-mps"
-version = "0.0.7"
+version = "0.0.8"
 description = "with Apple MPS support for OpenAI Whisper"
 authors = [
     {name = "wushuhong", email = "wushuhong@atomgradient.com"},
 ]
 dependencies = [
-    "moviepy==1.0.3",
-    "pytube==15.0.0",
+    "moviepy>=1.0.3",
+    "pytube>=15.0.0",
     "mlx>=0.0.5",
     "numba>=0.58.1",
     "numpy>=1.26.2",
     "torch>=2.1.1",
     "tqdm>=4.66.1",
     "more-itertools>=10.1.0",
-    "tiktoken==0.3.3",
+    "tiktoken>=0.3.3",
     "rich>=13.7.0",
 ]
-requires-python = ">=3.11"
+requires-python = ">=3.9"
 readme = "README.md"
 license = {text = "MIT"}
 
