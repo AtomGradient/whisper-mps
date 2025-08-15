@@ -3,7 +3,7 @@ import os
 from pathlib import Path
 from typing import Optional
 import sys
-from moviepy.editor import AudioFileClip
+from moviepy import AudioFileClip
 from pytube import YouTube
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 

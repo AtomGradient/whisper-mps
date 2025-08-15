@@ -6,7 +6,7 @@ authors = [
     {name = "wushuhong", email = "wushuhong@atomgradient.com"},
 ]
 dependencies = [
-    "moviepy>=1.0.3",
+    "moviepy>=2.0.0,<3.0.0",
     "pytube>=15.0.0",
     "mlx>=0.0.5",
     "numba>=0.58.1",
