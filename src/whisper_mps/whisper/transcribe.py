@@ -3,6 +3,7 @@
 import mlx.core as mx
 import numpy as np
 import sys
+import logging
 from typing import Optional, Tuple, Union
 import tqdm
 
@@ -19,6 +20,9 @@ from .audio import (
 from .decoding import DecodingOptions, DecodingResult
 from .load_models import load_model
 from .tokenizer import LANGUAGES, TO_LANGUAGE_CODE, get_tokenizer
+
+# Get logger for this module
+logger = logging.getLogger(__name__)
 
 
 def _format_timestamp(seconds: float):
@@ -135,7 +139,7 @@ def transcribe(
             decode_options["language"] = "en"
         else:
             if verbose:
-                print(
+                logger.info(
                     "Detecting language using up to the first 30 seconds. "
                     "Use the `language` decoding option to specify the language"
                 )
@@ -143,7 +147,7 @@ def transcribe(
             _, probs = model.detect_language(mel_segment)
             decode_options["language"] = max(probs, key=probs.get)
             if verbose is not None:
-                print(
+                logger.info(
                     f"Detected language: {LANGUAGES[decode_options['language']].title()}"
                 )
 
@@ -329,7 +333,7 @@ def transcribe(
                 for segment in current_segments:
                     start, end, text = segment["start"], segment["end"], segment["text"]
                     line = f"[{_format_timestamp(start)} --> {_format_timestamp(end)}] {text}"
-                    print(make_safe(line))
+                    logger.info(make_safe(line))
 
             # if a segment is instantaneous or does not contain text, clear it
             for i, segment in enumerate(current_segments):

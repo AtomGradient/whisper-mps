@@ -61,4 +61,6 @@ The `whisper-mps` repo provides all-round support for running Whisper in various
                   The YouTube video URL. (Deprecated)
   --output-file-name OUTPUT_FILE_NAME
                   The output file name for the transcribed text JSON.
+  --log-level LOG_LEVEL
+                  Optional. ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
 ```
