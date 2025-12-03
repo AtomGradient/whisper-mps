@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+# ytdl-low: Download low-bitrate MP4A audio (≤50kbps) from YouTube
+# Usage:
+#   ytdl-low <URL>
+#   ytdl-low --cookies <URL>
+#   ytdl-low --file-name "myaudio.m4a" <URL>
+
+set -u
+
+USE_COOKIES=0
+CUSTOM_NAME=""
+
+# Parse flags
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --cookies)
+      USE_COOKIES=1
+      shift
+      ;;
+    --file-name)
+      CUSTOM_NAME="$2"
+      shift 2
+      ;;
+    *)
+      URL="$1"
+      shift
+      ;;
+  esac
+done
+
+if [ -z "${URL:-}" ]; then
+  echo "Usage: $0 [--cookies] [--file-name \"name.ext\"] <youtube-url>"
+  exit 1
+fi
+
+# Format fallback chain
+FORMAT='bestaudio[acodec^=mp4a][abr<=50]/139/140/251/bestaudio'
+
+# Default output pattern (used only if no custom name)
+DEFAULT_OUT='%(title)s [%(id)s].%(ext)s'
+
+if [ -n "$CUSTOM_NAME" ]; then
+  OUT="$CUSTOM_NAME"
+else
+  OUT="$DEFAULT_OUT"
+fi
+
+CMD=(yt-dlp -f "$FORMAT" -o "$OUT" --restrict-filenames --no-playlist)
+
+# Enable cookies only when user requests it
+if [ "$USE_COOKIES" -eq 1 ]; then
+  CMD+=(--cookies-from-browser chrome)
+fi
+
+# Add URL
+CMD+=("$URL")
+
+echo "Running: ${CMD[*]}"
+"${CMD[@]}"
