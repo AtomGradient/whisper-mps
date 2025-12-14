@@ -223,12 +223,36 @@ for ((i=$START_INDEX-1; i<$END_INDEX; i++)); do
     # Sanitize title for filename
     safe_title=$(sanitize_filename "$video_title")
     audio_file="$AUDIO_DIR/${safe_title}.m4a"
-    transcript_file="$OUTPUT_DIR/${safe_title}.txt"
+    transcript_file="$OUTPUT_DIR/${safe_title}.json"  # Changed from .txt to .json
     
     # Download audio
     if [[ "$SKIP_DOWNLOAD" == false ]]; then
         if [[ -f "$audio_file" ]]; then
             echo -e "${YELLOW}⊙ Audio file already exists, skipping download${NC}"
+            
+            # Check if file is valid (not empty and reasonable size)
+            file_size=$(stat -f%z "$audio_file" 2>/dev/null || stat -c%s "$audio_file" 2>/dev/null)
+            if [[ $file_size -lt 1000 ]]; then
+                echo -e "${YELLOW}⊙ Audio file seems corrupted (too small), re-downloading...${NC}"
+                rm -f "$audio_file"
+                
+                # Re-download
+                echo -e "${GREEN}⊙ Downloading audio...${NC}"
+                if [[ "$USE_COOKIES" == true ]]; then
+                    if ! "$YTDL_CMD" --file-name "$audio_file" --cookies "$video_url"; then
+                        echo -e "${RED}✗ Download failed${NC}"
+                        ((fail_count++))
+                        continue
+                    fi
+                else
+                    if ! "$YTDL_CMD" --file-name "$audio_file" "$video_url"; then
+                        echo -e "${RED}✗ Download failed${NC}"
+                        ((fail_count++))
+                        continue
+                    fi
+                fi
+                echo -e "${GREEN}✓ Download successful${NC}"
+            fi
         else
             echo -e "${GREEN}⊙ Downloading audio...${NC}"
             
@@ -267,28 +291,29 @@ for ((i=$START_INDEX-1; i<$END_INDEX; i++)); do
         else
             echo -e "${GREEN}⊙ Transcribing audio...${NC}"
             
-            # whisper-mps doesn't support --output-file-name
-            # It outputs to the same directory as the audio file with .txt extension
-            # So we need to run it and then move the output file
+            # whisper-mps outputs to output.json in the current directory by default
+            # We need to run it and then move the file
             
-            # Run whisper-mps (it will create output in the audio directory)
-            if "$WHISPER_CMD" --file-name "$audio_file" --model-name "$MODEL_NAME"; then
-                # Find the generated transcript file
-                # whisper-mps creates a .txt file with the same name as the audio file
-                temp_transcript="${audio_file%.*}.txt"
-                
-                if [[ -f "$temp_transcript" ]]; then
-                    # Move to the transcriptions directory if it's different
-                    if [[ "$temp_transcript" != "$transcript_file" ]]; then
-                        mv "$temp_transcript" "$transcript_file"
-                    fi
+            # Save current directory and change to output directory
+            original_dir=$(pwd)
+            cd "$OUTPUT_DIR" || exit 1
+            
+            # Run whisper-mps from the output directory
+            if "$WHISPER_CMD" --file-name "$original_dir/$audio_file" --model-name "$MODEL_NAME"; then
+                # The output will be output.json in the current directory
+                if [[ -f "output.json" ]]; then
+                    # Rename to our desired filename
+                    mv "output.json" "${safe_title}.json"
+                    cd "$original_dir"
                     echo -e "${GREEN}✓ Transcription successful${NC}"
                     ((success_count++))
                 else
-                    echo -e "${RED}✗ Transcription file not found after processing${NC}"
+                    cd "$original_dir"
+                    echo -e "${RED}✗ Transcription file not found: output.json${NC}"
                     ((fail_count++))
                 fi
             else
+                cd "$original_dir"
                 echo -e "${RED}✗ Transcription failed${NC}"
                 ((fail_count++))
             fi

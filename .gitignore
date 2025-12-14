@@ -164,3 +164,4 @@ cython_debug/
 *.json
 output_bushi.wav
 audios
+transcriptions
