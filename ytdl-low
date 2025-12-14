@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # ytdl-low: Download low-bitrate MP4A audio (≤50kbps) from YouTube
+# Falls back to smallest MP4 if audio-only formats unavailable
 # Usage:
 #   ytdl-low <URL>
 #   ytdl-low --cookies <URL>
@@ -33,8 +34,12 @@ if [ -z "${URL:-}" ]; then
   exit 1
 fi
 
-# Format fallback chain
-FORMAT='bestaudio[acodec^=mp4a][abr<=50]/139/140/251/bestaudio'
+# Enhanced format fallback chain:
+# 1. Try audio-only formats (mp4a codec, ≤50kbps)
+# 2. Try common audio-only format IDs
+# 3. Fall back to smallest MP4 video (format 91 or worst available)
+# 4. Last resort: best audio available
+FORMAT='bestaudio[acodec^=mp4a][abr<=50]/139/140/251/91/worst[ext=mp4]/bestaudio'
 
 # Default output pattern (used only if no custom name)
 DEFAULT_OUT='%(title)s [%(id)s].%(ext)s'
