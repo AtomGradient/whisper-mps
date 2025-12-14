@@ -267,9 +267,27 @@ for ((i=$START_INDEX-1; i<$END_INDEX; i++)); do
         else
             echo -e "${GREEN}⊙ Transcribing audio...${NC}"
             
-            if "$WHISPER_CMD" --file-name "$audio_file" --output-file-name "$transcript_file" --model-name "$MODEL_NAME"; then
-                echo -e "${GREEN}✓ Transcription successful${NC}"
-                ((success_count++))
+            # whisper-mps doesn't support --output-file-name
+            # It outputs to the same directory as the audio file with .txt extension
+            # So we need to run it and then move the output file
+            
+            # Run whisper-mps (it will create output in the audio directory)
+            if "$WHISPER_CMD" --file-name "$audio_file" --model-name "$MODEL_NAME"; then
+                # Find the generated transcript file
+                # whisper-mps creates a .txt file with the same name as the audio file
+                temp_transcript="${audio_file%.*}.txt"
+                
+                if [[ -f "$temp_transcript" ]]; then
+                    # Move to the transcriptions directory if it's different
+                    if [[ "$temp_transcript" != "$transcript_file" ]]; then
+                        mv "$temp_transcript" "$transcript_file"
+                    fi
+                    echo -e "${GREEN}✓ Transcription successful${NC}"
+                    ((success_count++))
+                else
+                    echo -e "${RED}✗ Transcription file not found after processing${NC}"
+                    ((fail_count++))
+                fi
             else
                 echo -e "${RED}✗ Transcription failed${NC}"
                 ((fail_count++))
