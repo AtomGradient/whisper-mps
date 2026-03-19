@@ -35,6 +35,13 @@ Run inference with a specific model size:
 whisper-mps --file-name <filename> --model-name base
 ```
 
+Specify the language to skip auto-detection (useful for short clips or lower-param models):
+
+```bash
+# Use an ISO 639-1 code (e.g. "en", "fr", "de", "zh") or the full language name (e.g. "french")
+whisper-mps --file-name <filename> --language fr
+```
+
 Run inference from a YouTube URL on your computer:
 
 > [!NOTE]
@@ -57,6 +64,10 @@ The `whisper-mps` repo provides all-round support for running Whisper in various
                   Path or URL to the audio file to be transcribed.
   --model-name MODEL_NAME
                   Size of the OPENAI Whisper model name, like tiny (default), base, small, etc.
+  --language LANGUAGE
+                  Language spoken in the audio (e.g. "en", "fr", "de", "zh", or full names like
+                  "french"). Skips automatic language detection. Helpful when auto-detection fails
+                  on short clips or with lower-param models.
   --youtube-url URL_ADDRESS
                   The YouTube video URL. (Deprecated)
   --output-file-name OUTPUT_FILE_NAME
