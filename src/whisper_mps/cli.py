@@ -21,7 +21,10 @@ Examples:
   
   # Transcribe and save to a custom output file
   whisper-mps --file-name audio.mp3 --output-file-name transcript.json
-  
+
+  # Specify language to skip auto-detection
+  whisper-mps --file-name audio.mp3 --language fr
+
   # Control logging verbosity
   whisper-mps --file-name audio.mp3 --log-level WARNING
 
@@ -76,6 +79,18 @@ parser.add_argument(
 )
 
 parser.add_argument(
+    "--language",
+    required=False,
+    default=None,
+    type=str,
+    metavar="LANGUAGE",
+    help='Language spoken in the audio. Supplying this skips automatic language detection. '
+         'Use the two-letter ISO 639-1 code (e.g. "en", "fr", "de", "zh") or the full language '
+         'name (e.g. "english", "french"). Useful when auto-detection fails on short or '
+         'low-quality audio.',
+)
+
+parser.add_argument(
     "--log-level",
     required=False,
     default="INFO",
@@ -86,14 +101,17 @@ parser.add_argument(
          'Options: DEBUG (most verbose), INFO (default), WARNING, ERROR, CRITICAL (least verbose).',
 )
 
-def worker(file_name,model_name,output_file_name):
+def worker(file_name, model_name, output_file_name, language=None):
     with Progress(
         TextColumn("🤗 [progress.description]"),
         BarColumn(style="yellow1", pulse_style="white"),
         TimeElapsedColumn(),
     ) as progress:
         progress.add_task("[yellow]Transcribing...", total=None)
-        text = whisper.transcribe(file_name,model=model_name)
+        decode_options = {}
+        if language is not None:
+            decode_options["language"] = language
+        text = whisper.transcribe(file_name, model=model_name, **decode_options)
         logging.debug(f"Transcription result: {text}")
         with open(output_file_name, "w", encoding="utf8") as fp:
             json.dump(text, fp, ensure_ascii=False)
@@ -103,27 +121,28 @@ def worker(file_name,model_name,output_file_name):
 
 def main():
     args = parser.parse_args()
-    
+
     # Configure logging
     logging.basicConfig(
         level=getattr(logging, args.log_level),
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
         datefmt='%Y-%m-%d %H:%M:%S'
     )
-    
+
     file_name = args.file_name
     model_name = args.model_name
     youtube_url = args.youtube_url
     output_file_name = args.output_file_name
+    language = args.language
     if not output_file_name.lower().endswith('.json'):
         output_file_name = output_file_name + '.json'
     if youtube_url is not None:
         logging.info(f'start downloading audios: {args.youtube_url}')
         audio_path = download_and_convert_to_mp3(youtube_url)
-        worker(audio_path,model_name,output_file_name)
+        worker(audio_path, model_name, output_file_name, language=language)
     else:
         if file_name is None:
             logging.error("local file_name should not be none!")
             return None
-        worker(file_name,model_name,output_file_name)    
+        worker(file_name, model_name, output_file_name, language=language)
 
