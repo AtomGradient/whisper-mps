@@ -127,6 +127,9 @@ def load_torch_model(
     if name in _MODELS:
         checkpoint_file = _download(_MODELS[name], download_root)
         alignment_heads = _ALIGNMENT_HEADS[name]
+    elif os.path.isfile(name):
+        checkpoint_file = name
+        alignment_heads = None
     else:
         raise RuntimeError(
             f"Model {name} not found; available models = {available_models()}"
